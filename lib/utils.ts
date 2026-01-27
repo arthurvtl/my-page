@@ -6,11 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Helper para gerar caminhos de assets com basePath
-const basePath = process.env.NODE_ENV === 'production' ? '/my-page' : '';
+// O basePath é sempre /my-page para GitHub Pages
+const basePath = '/my-page';
 
 export function getAssetPath(path: string): string {
   if (!path) return path;
   if (path.startsWith('http')) return path;
+  if (path.startsWith(basePath)) return path; // Já tem o prefixo
   return `${basePath}${path.startsWith('/') ? path : '/' + path}`;
 }
 
