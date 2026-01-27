@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { type Project } from '@/lib/projects-data';
 import { type Language } from '@/contexts/language-context';
 import useEmblaCarousel from 'embla-carousel-react';
+import { getAssetPath } from '@/lib/utils';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -115,7 +116,7 @@ export default function ProjectModal({
                         {project?.images?.map?.((img, index) => (
                           <div key={index} className="flex-shrink-0 w-full h-full relative bg-muted/20 flex items-center justify-center p-4">
                             <Image
-                              src={img}
+                              src={getAssetPath(img)}
                               alt={`${title ?? 'Project'} - ${index + 1}`}
                               fill
                               className="object-contain"

@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { ExternalLink, Github, Lock, Play, ImageIcon } from 'lucide-react';
 import { type Project } from '@/lib/projects-data';
 import { type Language } from '@/contexts/language-context';
+import { getAssetPath } from '@/lib/utils';
 
 interface ProjectCardProps {
   project: Project;
@@ -47,7 +48,7 @@ export default function ProjectCard({
       <div className="relative aspect-video bg-muted/30 overflow-hidden">
         {project?.coverImage ? (
           <Image
-            src={project.coverImage}
+            src={getAssetPath(project.coverImage)}
             alt={title ?? 'Project cover'}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"

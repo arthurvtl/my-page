@@ -11,6 +11,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download, FileText } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
+import { getAssetPath } from '@/lib/utils';
 
 interface CVDownloadModalProps {
   isOpen: boolean;
@@ -88,7 +89,7 @@ export default function CVDownloadModal({ isOpen, onClose }: CVDownloadModalProp
                 {cvOptions.map((option, index) => (
                   <motion.a
                     key={option.lang}
-                    href={option.file}
+                    href={getAssetPath(option.file)}
                     download
                     className="group flex flex-col items-center gap-3 p-6 bg-muted/30 border border-border/50 rounded-xl hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
                     whileHover={{ scale: 1.02, y: -2 }}

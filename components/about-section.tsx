@@ -14,6 +14,7 @@ import { useInView } from 'react-intersection-observer';
 import { Database, Lightbulb, Zap } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
+import { getAssetPath } from '@/lib/utils';
 
 // ========== EDITE A URL DO AVATAR AQUI ==========
 const avatarUrl = '/profile.jpg';
@@ -84,7 +85,7 @@ export default function AboutSection() {
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl shadow-primary/20">
                 {avatarUrl ? (
                   <Image
-                    src={avatarUrl}
+                    src={getAssetPath(avatarUrl)}
                     alt="Foto de perfil"
                     fill
                     className="object-cover"
