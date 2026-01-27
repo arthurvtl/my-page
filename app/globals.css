@@ -316,3 +316,56 @@
   background: hsl(var(--primary) / 0.3);
   color: hsl(var(--foreground));
 }
+
+/* Animações leves para o background - otimizadas para mobile */
+@keyframes blobSlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+}
+
+@keyframes blobSlowReverse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, 30px) scale(1.05);
+  }
+}
+
+.animate-blob-slow {
+  animation: blobSlow 20s ease-in-out infinite;
+}
+
+.animate-blob-slow-reverse {
+  animation: blobSlowReverse 25s ease-in-out infinite;
+}
+
+/* Reduz animações para usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-blob-slow,
+  .animate-blob-slow-reverse,
+  .animate-float,
+  .animate-pulse-slow {
+    animation: none !important;
+  }
+}
+
+/* Desativa animações pesadas em mobile para melhor performance */
+@media (max-width: 768px) {
+  .animate-blob-slow,
+  .animate-blob-slow-reverse {
+    animation-duration: 30s;
+  }
+}
