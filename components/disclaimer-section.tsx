@@ -2,11 +2,10 @@
 
 /**
  * ===========================================
- * COMPONENTE: DISCLAIMER SECTION
+ * COMPONENTE: DISCLAIMER SECTION (OTIMIZADO)
  * ===========================================
  * 
- * Seção divertida explicando que o foco é dados, não web dev.
- * Inclui reflexão sobre uso de IA.
+ * Animações simplificadas para melhor performance.
  */
 
 import { motion } from 'framer-motion';
@@ -54,52 +53,33 @@ export default function DisclaimerSection() {
 
   const t = content[language];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
+  // Animação simples de fade
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   return (
     <section className="py-20 md:py-28 relative overflow-hidden">
-      {/* Background gradient */}
+      {/* Background gradient estático */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/10 via-background to-muted/10" />
       
-      {/* Decorative elements */}
-      <motion.div 
-        className="absolute top-10 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <motion.div 
-        className="absolute bottom-10 right-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, delay: 4 }}
-      />
+      {/* Blobs decorativos estáticos */}
+      <div className="absolute top-10 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30" />
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-30" />
       
       <div className="container-custom relative z-10">
         <motion.div
           ref={ref}
-          variants={containerVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
           className="max-w-4xl mx-auto"
         >
           {/* Badge */}
-          <motion.div variants={itemVariants} className="flex justify-center mb-6">
+          <motion.div variants={fadeIn} className="flex justify-center mb-6">
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
               <Sparkles className="w-4 h-4" />
               {t.badge}
@@ -107,15 +87,12 @@ export default function DisclaimerSection() {
           </motion.div>
 
           {/* Title */}
-          <motion.h2
-            variants={itemVariants}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-10"
-          >
+          <motion.h2 variants={fadeIn} className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-10">
             <span className="text-gradient">{t.title}</span>
           </motion.h2>
 
           {/* Main content */}
-          <motion.div variants={itemVariants} className="space-y-6 mb-12">
+          <motion.div variants={fadeIn} className="space-y-6 mb-12">
             {t.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
@@ -126,19 +103,15 @@ export default function DisclaimerSection() {
           </motion.div>
 
           {/* Skills icons */}
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center gap-8 mb-16"
-          >
+          <motion.div variants={fadeIn} className="flex justify-center gap-8 mb-16">
             {[
               { icon: Brain, label: 'Data Analysis', color: 'text-primary' },
               { icon: Bot, label: 'Automation', color: 'text-secondary' },
               { icon: Lightbulb, label: 'Problem Solving', color: 'text-accent' },
             ].map((item, index) => (
-              <motion.div
+              <div
                 key={index}
-                className="flex flex-col items-center gap-2"
-                whileHover={{ scale: 1.1, y: -5 }}
+                className="flex flex-col items-center gap-2 hover:scale-105 transition-transform"
               >
                 <div className={`p-4 rounded-2xl bg-muted/50 ${item.color}`}>
                   <item.icon className="w-6 h-6" />
@@ -146,26 +119,17 @@ export default function DisclaimerSection() {
                 <span className="text-xs font-medium text-muted-foreground">
                   {item.label}
                 </span>
-              </motion.div>
+              </div>
             ))}
           </motion.div>
 
           {/* AI Reflection Card */}
-          <motion.div
-            variants={itemVariants}
-            className="relative"
-          >
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-primary/30 via-secondary/20 to-accent/30 rounded-3xl blur-xl"
-              animate={{ opacity: [0.5, 0.8, 0.5] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
+          <motion.div variants={fadeIn} className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/10 to-accent/20 rounded-3xl blur-xl opacity-50" />
             <div className="relative bg-card/90 backdrop-blur-md border border-primary/20 rounded-3xl p-8 md:p-10">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-foreground">
-                  {t.reflection.title}
-                </h3>
-              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-6">
+                {t.reflection.title}
+              </h3>
               
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 {t.reflection.text}
@@ -185,4 +149,3 @@ export default function DisclaimerSection() {
     </section>
   );
 }
-

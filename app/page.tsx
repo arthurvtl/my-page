@@ -3,53 +3,45 @@
  * PÁGINA PRINCIPAL DO PORTFÓLIO
  * ===========================================
  * 
- * Esta é a página principal que agrupa todas as seções.
- * 
- * ESTRUTURA:
- * 1. Header - Navegação fixa
- * 2. Hero - Seção de apresentação
- * 3. About - Sobre mim
- * 4. Projects - Projetos com filtro
- * 5. Contact - Links de contato
- * 6. Footer - Rodapé
- * 
- * COMO PERSONALIZAR:
- * - Textos: edite /lib/translations.ts
- * - Projetos: edite /lib/projects-data.ts
- * - Cores: edite /app/globals.css e /tailwind.config.ts
- * - Links de contato: edite os arquivos contact-section.tsx e footer.tsx
+ * OTIMIZADO PARA PERFORMANCE:
+ * - Lazy loading de seções abaixo do fold
+ * - Componentes carregados sob demanda
  */
 
+import dynamic from 'next/dynamic';
 import Header from '@/components/header';
 import HeroSection from '@/components/hero-section';
-import AboutSection from '@/components/about-section';
-import DisclaimerSection from '@/components/disclaimer-section';
-import ProjectsSection from '@/components/projects-section';
-import ContactSection from '@/components/contact-section';
-import Footer from '@/components/footer';
+
+// Lazy load de componentes abaixo do fold para carregar mais rápido
+const AboutSection = dynamic(() => import('@/components/about-section'), {
+  loading: () => <div className="min-h-screen" />,
+});
+
+const DisclaimerSection = dynamic(() => import('@/components/disclaimer-section'), {
+  loading: () => <div className="min-h-[50vh]" />,
+});
+
+const ProjectsSection = dynamic(() => import('@/components/projects-section'), {
+  loading: () => <div className="min-h-screen" />,
+});
+
+const ContactSection = dynamic(() => import('@/components/contact-section'), {
+  loading: () => <div className="min-h-[50vh]" />,
+});
+
+const Footer = dynamic(() => import('@/components/footer'), {
+  loading: () => <div className="h-20" />,
+});
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      {/* Navegação fixa no topo */}
       <Header />
-      
-      {/* Seção Hero - Apresentação principal */}
       <HeroSection />
-      
-      {/* Seção Sobre - Informações pessoais */}
       <AboutSection />
-      
-      {/* Seção Disclaimer - Reflexão sobre IA e foco em dados */}
       <DisclaimerSection />
-      
-      {/* Seção de Projetos - Grid com filtros */}
       <ProjectsSection />
-      
-      {/* Seção de Contato - Links sociais */}
       <ContactSection />
-      
-      {/* Rodapé */}
       <Footer />
     </main>
   );
