@@ -1,0 +1,318 @@
+/**
+ * ===========================================
+ * ESTILOS GLOBAIS DO PORTFÓLIO
+ * ===========================================
+ * 
+ * PALETA DE CORES - AZUL PETRÓLEO + CINZA ESCURO:
+ * - Primary (Teal): #14b8a6 - Azul petróleo vibrante
+ * - Secondary (Cyan): #06b6d4 - Cyan luminoso
+ * - Background: #0a0f14 - Cinza escuro profundo
+ * - Foreground: #e2e8f0 - Cinza claro suave
+ * - Muted: #1e293b - Cinza médio
+ * - Accent: #2dd4bf - Teal claro para destaques
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cores principais - Paleta Azul Petróleo + Cinza Escuro */
+    --background: 210 25% 6%;           /* #0a0f14 - Cinza escuro profundo */
+    --foreground: 215 20% 90%;          /* #e2e8f0 - Cinza claro */
+    
+    --card: 215 25% 10%;                /* #141b24 - Card escuro */
+    --card-foreground: 215 20% 90%;
+    
+    --popover: 215 25% 10%;
+    --popover-foreground: 215 20% 90%;
+    
+    --primary: 173 58% 39%;             /* #14b8a6 - Teal/Azul petróleo */
+    --primary-foreground: 210 25% 6%;
+    
+    --secondary: 189 94% 43%;           /* #06b6d4 - Cyan */
+    --secondary-foreground: 210 25% 6%;
+    
+    --muted: 217 33% 17%;               /* #1e293b - Cinza médio */
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 170 77% 50%;              /* #2dd4bf - Teal claro */
+    --accent-foreground: 210 25% 6%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 173 58% 39%;
+    
+    --radius: 0.75rem;
+    
+    /* Cores extras para gradientes */
+    --glow-primary: 173 58% 39%;
+    --glow-secondary: 189 94% 43%;
+  }
+
+  /* Tema claro (caso queira alternar futuramente) */
+  .light {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+    --primary: 173 58% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 189 94% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 215 20% 90%;
+    --muted-foreground: 215 20% 40%;
+    --accent: 170 77% 45%;
+    --accent-foreground: 0 0% 100%;
+    --border: 215 20% 85%;
+    --input: 215 20% 85%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Esconde erros de hidratação */
+  [data-hydration-error] {
+    display: none !important;
+  }
+}
+
+@layer utilities {
+  /* Animações customizadas */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+  
+  /* Gradiente elegante de fundo */
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(215 25% 8%) 50%,
+      hsl(var(--background)) 100%
+    );
+  }
+  
+  /* Efeito de texto gradiente */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--secondary)) 50%,
+      hsl(var(--accent)) 100%
+    );
+  }
+  
+  /* Container centralizado */
+  .container-custom {
+    @apply mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.5);
+  }
+  
+  .glow-secondary {
+    box-shadow: 0 0 40px -10px hsl(var(--secondary) / 0.5);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+  }
+  
+  /* Animação de float */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+  
+  /* Animação de pulse suave */
+  .animate-pulse-slow {
+    animation: pulseSlow 4s ease-in-out infinite;
+  }
+  
+  /* Animação de rotate lento */
+  .animate-spin-slow {
+    animation: spin 20s linear infinite;
+  }
+  
+  /* Glassmorphism */
+  .glass {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+  
+  /* Gradiente de borda animado */
+  .border-gradient {
+    position: relative;
+    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+                linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent))) border-box;
+    border: 1px solid transparent;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes morphBlob {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Animação de onda fluida */
+.wave-animation {
+  animation: wave 15s linear infinite;
+}
+
+/* Blob morfando */
+.morph-blob {
+  animation: morphBlob 8s ease-in-out infinite;
+}
+
+/* Gradiente animado */
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}
