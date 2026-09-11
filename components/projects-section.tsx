@@ -1,16 +1,12 @@
 'use client';
 
 /**
- * ===========================================
- * COMPONENTE: SEÇÃO DE PROJETOS
- * ===========================================
- * 
- * Grid de projetos com filtro por categoria.
- * Os projetos são definidos em /lib/projects-data.ts
+ * 02 — PROJETOS
+ * Lista editorial (não grid de cards). Filtro por categoria como toggles mono.
+ * Projetos em /lib/projects-data.ts
  */
 
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useLanguage } from '@/contexts/language-context';
 import { projects, type Project } from '@/lib/projects-data';
@@ -21,107 +17,85 @@ type CategoryFilter = 'all' | 'data-analysis' | 'automation' | 'ai' | 'client-so
 
 export default function ProjectsSection() {
   const { t, language } = useLanguage();
-  const [activeFilter, setActiveFilter] = useState<CategoryFilter>('all');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const [filter, setFilter] = useState<CategoryFilter>('all');
+  const [selected, setSelected] = useState<Project | null>(null);
+  const [ref] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  // Filtra projetos baseado na categoria selecionada
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === 'all') return projects ?? [];
-    return (projects ?? [])?.filter?.((p) => p?.category === activeFilter) ?? [];
-  }, [activeFilter]);
+  const filtered = useMemo(
+    () => (filter === 'all' ? projects : projects.filter((p) => p.category === filter)),
+    [filter],
+  );
 
-  const categories: { key: CategoryFilter; label: string }[] = [
+  const cats: { key: CategoryFilter; label: string }[] = [
     { key: 'all', label: t?.projects?.filterAll ?? 'Todos' },
     { key: 'data-analysis', label: t?.projects?.categories?.['data-analysis'] ?? 'Análise de Dados' },
-    { key: 'automation', label: t?.projects?.categories?.['automation'] ?? 'Automações' },
+    { key: 'automation', label: t?.projects?.categories?.['automation'] ?? 'Automação' },
     { key: 'ai', label: t?.projects?.categories?.['ai'] ?? 'IA' },
-    { key: 'client-solutions', label: t?.projects?.categories?.['client-solutions'] ?? 'Soluções Cliente' },
+    { key: 'client-solutions', label: t?.projects?.categories?.['client-solutions'] ?? 'Cliente' },
   ];
+  const activeCats = cats.filter(
+    (c) => c.key === 'all' || projects.some((p) => p.category === c.key),
+  );
 
   return (
-    <section id="projects" className="py-20 md:py-32">
-      <div className="container-custom">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {t?.projects?.title ?? 'Meus Projetos'}
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            {t?.projects?.subtitle ?? 'Uma seleção dos meus trabalhos mais relevantes'}
-          </p>
-        </motion.div>
+    <section id="projects" className="border-t border-line py-20 md:py-28">
+      <div className="container-page">
+        <div ref={ref} className="grid gap-8 md:grid-cols-[180px_1fr] md:gap-16">
+          <div className="md:sticky md:top-28 md:self-start">
+            <p className="num text-sm text-ink/40">02</p>
+            <h2 className="mt-1 font-display text-2xl text-ink">
+              {t?.projects?.title ?? 'Projetos'}
+            </h2>
+            <p className="mt-3 max-w-[24ch] text-sm leading-relaxed text-ink/50">
+              {t?.projects?.subtitle ?? ''}
+            </p>
+          </div>
 
-        {/* Filtros */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12"
-        >
-          {categories?.map?.((cat) => (
-            <motion.button
-              key={cat?.key}
-              onClick={() => setActiveFilter(cat?.key)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeFilter === cat?.key
-                  ? 'bg-primary text-primary-foreground shadow-md'
-                  : 'bg-muted/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-              }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {cat?.label}
-            </motion.button>
-          )) ?? null}
-        </motion.div>
+          <div>
+            <div className="flex flex-wrap gap-x-5 gap-y-2 pb-4">
+              {activeCats.map((c) => (
+                <button
+                  key={c.key}
+                  onClick={() => setFilter(c.key)}
+                  className={`font-mono text-xs uppercase tracking-widest transition-colors ${
+                    filter === c.key
+                      ? 'text-ink underline decoration-blue decoration-2 underline-offset-[6px]'
+                      : 'text-ink/40 hover:text-ink'
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
 
-        {/* Grid de Projetos */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects?.map?.((project, index) => (
-              <ProjectCard
-                key={project?.id ?? index}
-                project={project}
-                index={index}
-                language={language}
-                onViewDetails={() => setSelectedProject(project)}
-                translations={t?.projects ?? {}}
-              />
-            )) ?? null}
-          </AnimatePresence>
-        </motion.div>
+            <ul className="border-t border-ink">
+              {filtered.map((p, i) => (
+                <ProjectCard
+                  key={p.id}
+                  project={p}
+                  index={i}
+                  language={language}
+                  onViewDetails={() => setSelected(p)}
+                  translations={t?.projects ?? {}}
+                />
+              ))}
+            </ul>
 
-        {/* Mensagem quando não há projetos */}
-        {(filteredProjects?.length ?? 0) === 0 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-muted-foreground py-12"
-          >
-            Nenhum projeto encontrado nesta categoria.
-          </motion.p>
-        )}
+            {filtered.length === 0 && (
+              <p className="py-12 font-mono text-xs uppercase tracking-widest text-ink/40">
+                {language === 'pt-BR'
+                  ? 'Nenhum projeto nesta categoria.'
+                  : 'No projects in this category.'}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Modal de detalhes do projeto */}
       <ProjectModal
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
+        project={selected}
+        isOpen={!!selected}
+        onClose={() => setSelected(null)}
         language={language}
         translations={t?.projects ?? {}}
       />

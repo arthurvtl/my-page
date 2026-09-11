@@ -1,138 +1,102 @@
 'use client';
 
 /**
- * ===========================================
- * COMPONENTE: HEADER / NAVEGAÇÃO
- * ===========================================
- * 
- * Header fixo com navegação e seletor de idioma.
- * Semi-transparente com blur para efeito de vidro.
+ * HEADER — barra fixa, branco sólido, régua fina ao rolar.
+ * Nome em serifa à esquerda, navegação mono à direita.
  */
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import LanguageSelector from './language-selector';
 
 export default function Header() {
   const { t } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window?.scrollY > 50);
-    };
-    window?.addEventListener?.('scroll', handleScroll);
-    return () => window?.removeEventListener?.('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = [
-    { href: '#home', label: t?.nav?.home ?? 'Início' },
+  const nav = [
     { href: '#about', label: t?.nav?.about ?? 'Sobre' },
     { href: '#projects', label: t?.nav?.projects ?? 'Projetos' },
     { href: '#contact', label: t?.nav?.contact ?? 'Contato' },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document?.querySelector?.(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
+  const go = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    setOpen(false);
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/90 backdrop-blur-xl border-b border-primary/10 shadow-lg shadow-primary/5'
-          : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 bg-paper transition-colors duration-200 ${
+        scrolled ? 'border-b border-line' : 'border-b border-transparent'
       }`}
     >
-      <div className="container-custom">
-        <nav className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo / Nome */}
-          <motion.a
+      <div className="container-page">
+        <nav className="flex h-16 items-center justify-between">
+          <a
             href="#home"
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection('#home');
+              go('#home');
             }}
-            className="text-xl font-semibold text-foreground hover:text-primary transition-colors group"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
+            className="font-display text-lg font-medium tracking-tight text-ink transition-colors hover:text-blue"
           >
-            <span className="text-primary group-hover:text-glow">&lt;</span>
-            <span className="text-gradient">Data</span>
-            <span className="text-primary group-hover:text-glow">/&gt;</span>
-          </motion.a>
+            Arthur Vital
+          </a>
 
-          {/* Desktop Navigation */}
-          <motion.div
-            className="hidden md:flex items-center gap-8"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {navItems?.map?.((item, index) => (
+          <div className="hidden items-center gap-8 md:flex">
+            {nav.map((i) => (
               <a
-                key={item?.href ?? index}
-                href={item?.href}
+                key={i.href}
+                href={i.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection(item?.href ?? '#');
+                  go(i.href);
                 }}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors relative group"
+                className="kicker text-ink/55 transition-colors hover:text-ink"
               >
-                {item?.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                {i.label}
               </a>
-            )) ?? null}
-          </motion.div>
-
-          {/* Language Selector & Mobile Menu Button */}
-          <div className="flex items-center gap-4">
+            ))}
             <LanguageSelector />
-            
-            {/* Mobile Menu Button */}
+          </div>
+
+          <div className="flex items-center gap-3 md:hidden">
+            <LanguageSelector />
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-              aria-label="Toggle menu"
+              onClick={() => setOpen(!open)}
+              aria-expanded={open}
+              aria-label="Menu"
+              className="font-mono text-xs uppercase tracking-widest text-ink"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {open ? 'fechar' : 'menu'}
             </button>
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <motion.div
-            className="md:hidden py-4 border-t border-border/50"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <div className="flex flex-col gap-4">
-              {navItems?.map?.((item, index) => (
-                <a
-                  key={item?.href ?? index}
-                  href={item?.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(item?.href ?? '#');
-                  }}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors py-2"
-                >
-                  {item?.label}
-                </a>
-              )) ?? null}
-            </div>
-          </motion.div>
+        {open && (
+          <div className="flex flex-col gap-1 border-t border-line py-3 md:hidden">
+            {nav.map((i) => (
+              <a
+                key={i.href}
+                href={i.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  go(i.href);
+                }}
+                className="kicker py-2 text-ink/70"
+              >
+                {i.label}
+              </a>
+            ))}
+          </div>
         )}
       </div>
     </header>

@@ -1,16 +1,12 @@
 'use client';
 
 /**
- * ===========================================
- * COMPONENTE: CARD DE PROJETO
- * ===========================================
- * 
- * Card individual de projeto com hover effects.
+ * LINHA DE PROJETO — número, título em serifa, descrição, stack mono,
+ * miniatura em P&B que ganha cor no hover, ações mono à direita.
  */
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ExternalLink, Github, Lock, Play, ImageIcon } from 'lucide-react';
 import { type Project } from '@/lib/projects-data';
 import { type Language } from '@/contexts/language-context';
 import { getAssetPath } from '@/lib/utils';
@@ -30,120 +26,88 @@ export default function ProjectCard({
   onViewDetails,
   translations,
 }: ProjectCardProps) {
-  const title = language === 'pt-BR' ? project?.titlePtBR : project?.titleEnUS;
-  const description = language === 'pt-BR' ? project?.descriptionPtBR : project?.descriptionEnUS;
-
-  const hasMedia = (project?.images?.length ?? 0) > 0 || project?.videoUrl;
+  const title = language === 'pt-BR' ? project.titlePtBR : project.titleEnUS;
+  const description = language === 'pt-BR' ? project.descriptionPtBR : project.descriptionEnUS;
+  const num = String(index + 1).padStart(2, '0');
+  const hasMedia = (project.images?.length ?? 0) > 0 || !!project.videoUrl;
+  const techs = project.technologies ?? [];
 
   return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group relative bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+    <motion.li
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: Math.min(index, 4) * 0.05 }}
+      className="group border-b border-line"
     >
-      {/* Imagem de capa */}
-      <div className="relative aspect-video bg-muted/30 overflow-hidden">
-        {project?.coverImage ? (
-          <Image
-            src={getAssetPath(project.coverImage)}
-            alt={title ?? 'Project cover'}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-            <ImageIcon className="w-12 h-12 text-muted-foreground/30" />
-          </div>
-        )}
+      <div className="grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-4 py-8 md:grid-cols-[3rem_1fr_7.5rem_9.5rem] md:items-center md:gap-x-6">
+        <span className="num pt-1 text-sm text-ink/35 md:pt-0">{num}</span>
 
-        {/* Badge de projeto privado */}
-        {project?.isPrivate && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-foreground/80 text-background text-xs font-medium rounded-full">
-            <Lock className="w-3 h-3" />
-            {(translations?.privateProject as string) ?? 'Privado'}
-          </div>
-        )}
-
-        {/* Indicação de mídia */}
-        {hasMedia && (
-          <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-foreground/80 text-background text-xs font-medium rounded-full">
-            {project?.videoUrl ? <Play className="w-3 h-3" /> : <ImageIcon className="w-3 h-3" />}
-            {project?.videoUrl ? 'Vídeo' : `${project?.images?.length ?? 0} imgs`}
-          </div>
-        )}
-
-        {/* Overlay no hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-
-      {/* Conteúdo */}
-      <div className="p-5">
-        <h3 className="text-lg font-semibold mb-2 line-clamp-1 group-hover:text-primary transition-colors">
-          {title ?? 'Projeto'}
-        </h3>
-
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {description ?? 'Descrição do projeto'}
-        </p>
-
-        {/* Tags de tecnologias */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {(project?.technologies ?? [])?.slice?.(0, 4)?.map?.((tech, i) => (
-            <span
-              key={i}
-              className="px-2 py-0.5 bg-muted/50 text-muted-foreground text-xs rounded-full"
-            >
-              {tech}
-            </span>
-          )) ?? null}
-          {(project?.technologies?.length ?? 0) > 4 && (
-            <span className="px-2 py-0.5 bg-muted/50 text-muted-foreground text-xs rounded-full">
-              +{(project?.technologies?.length ?? 0) - 4}
-            </span>
-          )}
+        <div className="min-w-0">
+          <h3 className="font-display text-2xl leading-tight text-ink transition-colors group-hover:text-blue md:text-[1.75rem]">
+            {title}
+          </h3>
+          <p className="measure mt-2 text-sm leading-relaxed text-ink/60">{description}</p>
+          <p className="mt-3 font-mono text-[11px] tracking-wide text-ink/40">
+            {techs.slice(0, 5).join('   /   ')}
+            {techs.length > 5 ? `   /   +${techs.length - 5}` : ''}
+          </p>
         </div>
 
-        {/* Botões de ação */}
-        <div className="flex flex-wrap gap-2">
-          {project?.repoUrl && (
+        <div className="col-start-2 row-start-3 hidden md:col-start-3 md:row-start-auto md:block">
+          {project.coverImage ? (
+            <div className="relative aspect-[3/2] w-full overflow-hidden border border-line">
+              <Image
+                src={getAssetPath(project.coverImage)}
+                alt=""
+                fill
+                sizes="140px"
+                className="object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
+              />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="col-start-2 row-start-2 flex flex-wrap items-center gap-x-4 gap-y-2 md:col-start-4 md:row-start-auto md:flex-col md:items-end md:gap-2">
+          {hasMedia && (
+            <button
+              onClick={onViewDetails}
+              className="group/btn inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-ink transition-colors hover:text-blue"
+            >
+              {(translations?.viewDetails as string) ?? 'Ver detalhes'}
+              <span className="transition-transform group-hover/btn:translate-x-0.5">→</span>
+            </button>
+          )}
+
+          {project.repoUrl && (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background text-xs font-medium rounded-lg hover:bg-foreground/80 transition-colors"
+              className="font-mono text-[11px] uppercase tracking-widest text-ink/45 transition-colors hover:text-ink"
             >
-              <Github className="w-3.5 h-3.5" />
-              {(translations?.viewRepo as string) ?? 'Repositório'}
+              {(translations?.viewRepo as string) ?? 'Repo'} ↗
             </a>
           )}
 
-          {project?.demoUrl && (
+          {project.demoUrl && (
             <a
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary/80 transition-colors"
+              className="font-mono text-[11px] uppercase tracking-widest text-ink/45 transition-colors hover:text-ink"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
-              {(translations?.viewDemo as string) ?? 'Demo'}
+              {(translations?.viewDemo as string) ?? 'Demo'} ↗
             </a>
           )}
 
-          {/* Botão Ver Detalhes para projetos com mídia */}
-          {hasMedia && (
-            <button
-              onClick={onViewDetails}
-              className="flex items-center gap-1.5 px-3 py-1.5 border border-primary text-primary text-xs font-medium rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              {(translations?.viewDetails as string) ?? 'Ver Detalhes'}
-            </button>
+          {project.isPrivate && (
+            <span className="font-mono text-[11px] uppercase tracking-widest text-ink/30">
+              {(translations?.privateProject as string) ?? 'Privado'}
+            </span>
           )}
         </div>
       </div>
-    </motion.article>
+    </motion.li>
   );
 }

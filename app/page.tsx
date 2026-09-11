@@ -1,20 +1,14 @@
 /**
- * ===========================================
- * PÁGINA PRINCIPAL DO PORTFÓLIO
- * ===========================================
- * 
- * OTIMIZADO PARA PERFORMANCE:
- * - Lazy loading de seções abaixo do fold
- * - Componentes carregados sob demanda
+ * PÁGINA PRINCIPAL
+ * Seções abaixo do fold carregadas sob demanda.
  */
 
 import dynamic from 'next/dynamic';
 import Header from '@/components/header';
 import HeroSection from '@/components/hero-section';
 
-// Lazy load de componentes abaixo do fold para carregar mais rápido
 const AboutSection = dynamic(() => import('@/components/about-section'), {
-  loading: () => <div className="min-h-screen" />,
+  loading: () => <div className="min-h-[60vh]" />,
 });
 
 const DisclaimerSection = dynamic(() => import('@/components/disclaimer-section'), {
@@ -22,20 +16,20 @@ const DisclaimerSection = dynamic(() => import('@/components/disclaimer-section'
 });
 
 const ProjectsSection = dynamic(() => import('@/components/projects-section'), {
-  loading: () => <div className="min-h-screen" />,
+  loading: () => <div className="min-h-[60vh]" />,
 });
 
 const ContactSection = dynamic(() => import('@/components/contact-section'), {
-  loading: () => <div className="min-h-[50vh]" />,
+  loading: () => <div className="min-h-[40vh]" />,
 });
 
 const Footer = dynamic(() => import('@/components/footer'), {
-  loading: () => <div className="h-20" />,
+  loading: () => <div className="h-24" />,
 });
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-paper">
       <Header />
       <HeroSection />
       <AboutSection />

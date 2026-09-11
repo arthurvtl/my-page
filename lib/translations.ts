@@ -30,9 +30,11 @@ export const translations = {
       greeting: 'Olá, eu sou',
       name: 'Arthur Vital', // <- EDITE SEU NOME AQUI
       title: 'Analista de Dados', // <- EDITE SEU TÍTULO
-      subtitle: 'Transformo ideias em soluções digitais elegantes e eficientes.',
-      cta: 'Ver Projetos',
-      contact: 'Entrar em Contato',
+      statement: 'Transformo dados em decisões.',
+      lead: 'Análise de dados, automação e pipelines de ETL com Python e SQL — do dado bruto ao painel que orienta a escolha.',
+      subtitle: 'Transformo dados em decisões.',
+      cta: 'Ver projetos',
+      contact: 'Entrar em contato',
     },
     
     // ========== SOBRE MIM ==========
@@ -94,9 +96,11 @@ export const translations = {
       greeting: "Hi, I'm",
       name: 'Arthur Vital', // <- EDIT YOUR NAME HERE
       title: 'Data Analyst', // <- EDIT YOUR TITLE
-      subtitle: 'I transform ideas into elegant and efficient digital solutions.',
-      cta: 'View Projects',
-      contact: 'Get in Touch',
+      statement: 'I turn data into decisions.',
+      lead: 'Data analysis, automation and ETL pipelines with Python and SQL — from raw data to the dashboard that drives the call.',
+      subtitle: 'I turn data into decisions.',
+      cta: 'View projects',
+      contact: 'Get in touch',
     },
     
     // ========== ABOUT ME ==========

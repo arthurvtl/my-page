@@ -1,48 +1,67 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/contexts/language-context';
 
-// Fonte otimizada - carrega apenas pesos necessários
-const inter = Inter({ 
+/**
+ * Tipografia — serifa com caráter para títulos, grotesca limpa para corpo,
+ * mono para labels e metadados (números tabulares).
+ */
+const fraunces = Fraunces({
   subsets: ['latin'],
-  display: 'swap', // Mostra texto imediatamente, troca fonte depois
-  preload: true,
-  variable: '--font-inter',
+  display: 'swap',
+  variable: '--font-fraunces',
 });
 
-/**
- * Viewport configuration para mobile
- */
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-hanken',
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-jetbrains',
+});
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: '#0a0f14',
+  themeColor: '#FCFCFD',
 };
 
-/**
- * SEO e Metadata
- */
 export const metadata: Metadata = {
-  title: 'Arthur | Data Analysis',
-  description: 'Portfólio profissional de Arthur Vital - Analista de Dados especializado em Python, SQL, automações e visualização de dados.',
-  keywords: ['analista de dados', 'data analyst', 'python', 'sql', 'pandas', 'automação', 'ETL', 'portfólio'],
+  title: 'Arthur Vital — Analista de Dados',
+  description:
+    'Arthur Vital, Analista de Dados. Análise, automação e pipelines de ETL com Python e SQL — do dado bruto ao painel que orienta a decisão.',
+  keywords: [
+    'analista de dados',
+    'data analyst',
+    'python',
+    'sql',
+    'pandas',
+    'automação',
+    'ETL',
+    'portfólio',
+  ],
   authors: [{ name: 'Arthur Vital' }],
   metadataBase: new URL('https://arthurvtl.github.io/my-page'),
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     alternateLocale: 'en_US',
-    title: 'Arthur | Data Analysis',
-    description: 'Portfólio profissional de Arthur Vital - Analista de Dados',
-    siteName: 'Arthur Vital Portfolio',
+    title: 'Arthur Vital — Analista de Dados',
+    description:
+      'Análise, automação e pipelines de ETL com Python e SQL — do dado bruto à decisão.',
+    siteName: 'Arthur Vital',
     images: ['/og-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Arthur | Data Analysis',
-    description: 'Portfólio profissional de Arthur Vital - Analista de Dados',
+    title: 'Arthur Vital — Analista de Dados',
+    description:
+      'Análise, automação e pipelines de ETL com Python e SQL — do dado bruto à decisão.',
     images: ['/og-image.png'],
   },
   icons: {
@@ -60,19 +79,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={inter.variable}>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={`${fraunces.variable} ${hanken.variable} ${jetbrains.variable}`}
+    >
       <head>
-        {/* Preconnect para carregar fontes mais rápido */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* DNS prefetch para GitHub */}
         <link rel="dns-prefetch" href="https://github.com" />
         <link rel="dns-prefetch" href="https://linkedin.com" />
       </head>
-      <body className={`${inter.className} antialiased`}>
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+      <body className="font-sans antialiased bg-paper text-ink">
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

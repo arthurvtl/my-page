@@ -1,20 +1,14 @@
 'use client';
 
 /**
- * ===========================================
- * COMPONENTE: SEÇÃO DE CONTATO
- * ===========================================
- * 
- * Links de contato: GitHub, LinkedIn, Email.
- * EDITE OS LINKS ABAIXO com suas informações reais.
+ * 03 — CONTATO
+ * Título grande em serifa, links como linhas em régua com seta que desliza no hover.
  */
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 
-// ========== LINKS DE CONTATO ==========
 const contactLinks = {
   github: 'https://github.com/arthurvtl',
   linkedin: 'https://www.linkedin.com/in/arthurvtl/',
@@ -22,108 +16,64 @@ const contactLinks = {
 };
 
 export default function ContactSection() {
-  const { t } = useLanguage();
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const { t, language } = useLanguage();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
-  const contacts = [
-    {
-      icon: Github,
-      label: t?.contact?.github ?? 'GitHub',
-      href: contactLinks?.github ?? '#',
-      description: '@arthurvtl',
-      color: 'hover:bg-slate-800 hover:text-white hover:border-primary/50',
-    },
-    {
-      icon: Linkedin,
-      label: t?.contact?.linkedin ?? 'LinkedIn',
-      href: contactLinks?.linkedin ?? '#',
-      description: '/in/arthurvtl',
-      color: 'hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5]/50',
-    },
-    {
-      icon: Mail,
-      label: t?.contact?.email ?? 'Email',
-      href: `mailto:${contactLinks?.email ?? ''}`,
-      description: contactLinks?.email ?? 'email@exemplo.com',
-      color: 'hover:bg-primary hover:text-primary-foreground hover:border-primary/50',
-    },
+  const rows = [
+    { label: 'GitHub', handle: '@arthurvtl', href: contactLinks.github, ext: true },
+    { label: 'LinkedIn', handle: '/in/arthurvtl', href: contactLinks.linkedin, ext: true },
+    { label: 'Email', handle: contactLinks.email, href: `mailto:${contactLinks.email}`, ext: false },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
-  };
-
   return (
-    <section id="contact" className="py-20 md:py-32 bg-muted/10">
-      <div className="container-custom">
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="max-w-3xl mx-auto text-center"
-        >
-          {/* Header */}
-          <motion.h2
-            variants={itemVariants}
-            className="text-3xl md:text-4xl font-bold mb-4"
-          >
-            {t?.contact?.title ?? 'Vamos Conversar?'}
-          </motion.h2>
+    <section id="contact" className="border-t border-line py-20 md:py-28">
+      <div className="container-page">
+        <div ref={ref} className="grid gap-10 md:grid-cols-[180px_1fr] md:gap-16">
+          <div className="md:sticky md:top-28 md:self-start">
+            <p className="num text-sm text-ink/40">03</p>
+            <h2 className="mt-1 font-display text-2xl text-ink">
+              {t?.nav?.contact ?? 'Contato'}
+            </h2>
+          </div>
 
-          <motion.p
-            variants={itemVariants}
-            className="text-muted-foreground mb-12 max-w-xl mx-auto"
-          >
-            {t?.contact?.subtitle ?? 'Estou sempre aberto a novas oportunidades e colaborações interessantes.'}
-          </motion.p>
-
-          {/* Links de contato */}
           <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
           >
-            {contacts?.map?.((contact, index) => {
-              const Icon = contact?.icon;
-              return (
-                <motion.a
-                  key={index}
-                  href={contact?.href}
-                  target={contact?.href?.startsWith?.('mailto') ? undefined : '_blank'}
-                  rel={contact?.href?.startsWith?.('mailto') ? undefined : 'noopener noreferrer'}
-                  className={`group relative flex flex-col items-center gap-3 p-6 bg-background rounded-xl shadow-md border border-border/50 transition-all duration-300 ${contact?.color ?? ''}`}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {Icon && <Icon className="w-8 h-8 transition-colors" />}
-                  <span className="font-semibold">{contact?.label}</span>
-                  <span className="text-sm text-muted-foreground group-hover:text-current/70 transition-colors">
-                    {contact?.description}
-                  </span>
-                  <ArrowUpRight className="absolute top-4 right-4 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </motion.a>
-              );
-            }) ?? null}
+            <h3 className="font-display text-4xl leading-[1.05] tracking-[-0.02em] text-ink md:text-5xl">
+              {t?.contact?.title ?? 'Vamos conversar?'}
+            </h3>
+            <p className="measure mt-5 text-lg leading-relaxed text-ink/65">
+              {t?.contact?.subtitle ?? ''}
+            </p>
+
+            <ul className="mt-10 border-t border-ink">
+              {rows.map((r) => (
+                <li key={r.label}>
+                  <a
+                    href={r.href}
+                    target={r.ext ? '_blank' : undefined}
+                    rel={r.ext ? 'noopener noreferrer' : undefined}
+                    className="group -mx-3 flex items-baseline justify-between gap-6 border-b border-line px-3 py-6 transition-colors hover:bg-wash"
+                  >
+                    <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <span className="font-display text-xl text-ink transition-colors group-hover:text-blue">
+                        {r.label}
+                      </span>
+                      <span className="font-mono text-xs tracking-wide text-ink/45">
+                        {r.handle}
+                      </span>
+                    </span>
+                    <span className="font-mono text-ink/40 transition-transform group-hover:translate-x-1 group-hover:text-blue">
+                      {r.ext ? '↗' : '→'}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,44 +1,36 @@
 'use client';
 
 /**
- * ===========================================
- * COMPONENTE: SELETOR DE IDIOMA
- * ===========================================
- * 
- * Botões para trocar entre PT-BR e EN-US.
- * A troca é instantânea, sem recarregar a página.
+ * SELETOR DE IDIOMA — toggle mono PT / EN
  */
 
-import { motion } from 'framer-motion';
 import { useLanguage, type Language } from '@/contexts/language-context';
 
 export default function LanguageSelector() {
   const { language, setLanguage } = useLanguage();
 
-  const languages: { code: Language; flag: string; label: string }[] = [
-    { code: 'pt-BR', flag: '🇧🇷', label: 'PT' },
-    { code: 'en-US', flag: '🇺🇸', label: 'EN' },
+  const langs: { code: Language; label: string }[] = [
+    { code: 'pt-BR', label: 'PT' },
+    { code: 'en-US', label: 'EN' },
   ];
 
   return (
-    <div className="flex items-center gap-1 bg-muted/30 rounded-full p-1">
-      {languages?.map?.((lang) => (
-        <motion.button
-          key={lang?.code}
-          onClick={() => setLanguage?.(lang?.code)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-            language === lang?.code
-              ? 'bg-primary text-primary-foreground shadow-sm'
-              : 'text-muted-foreground hover:text-foreground'
+    <div className="flex items-center gap-0.5 rounded-[3px] border border-line p-0.5">
+      {langs.map((l) => (
+        <button
+          key={l.code}
+          onClick={() => setLanguage(l.code)}
+          aria-pressed={language === l.code}
+          aria-label={`Idioma: ${l.label}`}
+          className={`px-2 py-1 font-mono text-[11px] font-medium tracking-widest transition-colors ${
+            language === l.code
+              ? 'bg-ink text-paper'
+              : 'text-ink/50 hover:text-ink'
           }`}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          aria-label={`Switch to ${lang?.label}`}
         >
-          <span className="text-base">{lang?.flag}</span>
-          <span className="hidden sm:inline">{lang?.label}</span>
-        </motion.button>
-      )) ?? null}
+          {l.label}
+        </button>
+      ))}
     </div>
   );
 }
