@@ -30,27 +30,26 @@ export const translations = {
       greeting: 'Olá, eu sou',
       name: 'Arthur Vital', // <- EDITE SEU NOME AQUI
       title: 'Analista de Dados', // <- EDITE SEU TÍTULO
-      statement: 'Transformo dados em decisões.',
-      lead: 'Análise de dados, automação e pipelines de ETL com Python e SQL — do dado bruto ao painel que orienta a escolha.',
-      subtitle: 'Transformo dados em decisões.',
+      statement: 'Limpo bases, monto pipelines e automatizo o que se repete.',
+      lead: 'Uso Python, SQL e Pandas para organizar dados, escrever ETL e montar dashboards.',
+      subtitle: 'Limpo bases, monto pipelines e automatizo o que se repete.',
       cta: 'Ver projetos',
       contact: 'Entrar em contato',
     },
     
     // ========== SOBRE MIM ==========
     about: {
-      title: 'Sobre Mim',
+      title: 'Sobre mim',
       paragraphs: [
-        'Sou um desenvolvedor com forte interesse em soluções orientadas a dados e automação de processos. Gosto de utilizar a programação para transformar dados em informações úteis e criar soluções que aumentam a eficiência e apoiam a tomada de decisão.',
-        'Meu foco principal está em análise de dados e automação, utilizando tecnologias como Python, Pandas, NumPy, SQL e processos de ETL. Busco desenvolver soluções limpas, práticas e confiáveis para organização, processamento e análise de dados.',
-        'Estou sempre em busca de aprimorar minhas habilidades, aprender novas tecnologias e aplicar a programação em problemas reais, especialmente em projetos voltados à análise de dados, automação e otimização de sistemas.'
+        'Sou analista de dados e programo para isso. No dia a dia uso Python, Pandas, NumPy e SQL: puxo dados de várias fontes, limpo, rodo o ETL e entrego em dashboard.',
+        'Também faço web quando o projeto pede. O IAeJovem, que fiz no HackFaesa 2025, é um app em Next.js e PostgreSQL com uma IA de apoio emocional para estudantes.',
       ],
     },
     
     // ========== PROJETOS ==========
     projects: {
-      title: 'Meus Projetos',
-      subtitle: 'Uma seleção dos meus trabalhos mais relevantes',
+      title: 'Projetos',
+      subtitle: '',
       viewRepo: 'Ver Repositório',
       viewDemo: 'Ver Demo',
       viewDetails: 'Ver Detalhes',
@@ -67,8 +66,8 @@ export const translations = {
     
     // ========== CONTATO ==========
     contact: {
-      title: 'Vamos Conversar?',
-      subtitle: 'Estou sempre aberto a novas oportunidades e colaborações interessantes.',
+      title: 'Vamos conversar?',
+      subtitle: 'Disponível para projetos de dados. O jeito mais rápido é por email.',
       email: 'Email',
       github: 'GitHub',
       linkedin: 'LinkedIn',
@@ -96,27 +95,26 @@ export const translations = {
       greeting: "Hi, I'm",
       name: 'Arthur Vital', // <- EDIT YOUR NAME HERE
       title: 'Data Analyst', // <- EDIT YOUR TITLE
-      statement: 'I turn data into decisions.',
-      lead: 'Data analysis, automation and ETL pipelines with Python and SQL — from raw data to the dashboard that drives the call.',
-      subtitle: 'I turn data into decisions.',
+      statement: 'I clean data, build pipelines and automate what repeats.',
+      lead: 'I use Python, SQL and Pandas to organize data, write ETL jobs and build dashboards.',
+      subtitle: 'I clean data, build pipelines and automate what repeats.',
       cta: 'View projects',
       contact: 'Get in touch',
     },
     
     // ========== ABOUT ME ==========
     about: {
-      title: 'About Me',
+      title: 'About me',
       paragraphs: [
-        'I am a developer with a strong interest in data-driven solutions and process automation. I enjoy using programming to turn data into useful insights and to build solutions that improve efficiency and decision-making.',
-        'My main focus is on data analysis and automation, working with technologies such as Python, Pandas, NumPy, SQL, and ETL processes. I like developing clean and practical solutions that help organize, process, and analyze data in a clear and reliable way.',
-        'I am always looking to improve my skills, learn new technologies, and apply programming to real-world data problems, especially in projects related to data analysis, automation, and system optimization.'
+        'I am a data analyst, and I code to do the job. Day to day I use Python, Pandas, NumPy and SQL: I pull data from several sources, clean it, run the ETL and deliver a dashboard.',
+        'I also build for the web when a project needs it. IAeJovem, which I made at HackFaesa 2025, is a Next.js and PostgreSQL app with an emotional-support AI for students.',
       ],
     },
     
     // ========== PROJECTS ==========
     projects: {
-      title: 'My Projects',
-      subtitle: 'A selection of my most relevant work',
+      title: 'Projects',
+      subtitle: '',
       viewRepo: 'View Repository',
       viewDemo: 'View Demo',
       viewDetails: 'View Details',
@@ -132,8 +130,8 @@ export const translations = {
     
     // ========== CONTACT ==========
     contact: {
-      title: "Let's Talk?",
-      subtitle: "I'm always open to new opportunities and interesting collaborations.",
+      title: "Let's talk?",
+      subtitle: 'Available for data projects. Email is the fastest way to reach me.',
       email: 'Email',
       github: 'GitHub',
       linkedin: 'LinkedIn',

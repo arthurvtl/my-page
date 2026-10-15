@@ -9,7 +9,7 @@ import { useLanguage } from '@/contexts/language-context';
 export default function Footer() {
   const { language } = useLanguage();
   const tagline =
-    language === 'pt-BR' ? 'Feito com dados e cafeína' : 'Built with data and caffeine';
+    language === 'pt-BR' ? 'Feito com Next.js, no GitHub Pages' : 'Built with Next.js, on GitHub Pages';
 
   const links = [
     { label: 'GitHub', href: 'https://github.com/arthurvtl', ext: true },

@@ -32,9 +32,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Arthur Vital — Analista de Dados',
+  title: 'Arthur Vital | Analista de Dados',
   description:
-    'Arthur Vital, Analista de Dados. Análise, automação e pipelines de ETL com Python e SQL — do dado bruto ao painel que orienta a decisão.',
+    'Arthur Vital, analista de dados em Vitória (ES). Python, SQL, ETL e dashboards.',
   keywords: [
     'analista de dados',
     'data analyst',
@@ -51,17 +51,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     alternateLocale: 'en_US',
-    title: 'Arthur Vital — Analista de Dados',
-    description:
-      'Análise, automação e pipelines de ETL com Python e SQL — do dado bruto à decisão.',
+    title: 'Arthur Vital | Analista de Dados',
+    description: 'Python, SQL, ETL e dashboards.',
     siteName: 'Arthur Vital',
     images: ['/og-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Arthur Vital — Analista de Dados',
-    description:
-      'Análise, automação e pipelines de ETL com Python e SQL — do dado bruto à decisão.',
+    title: 'Arthur Vital | Analista de Dados',
+    description: 'Python, SQL, ETL e dashboards.',
     images: ['/og-image.png'],
   },
   icons: {

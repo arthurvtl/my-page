@@ -46,27 +46,31 @@ export default function ProjectsSection() {
             <h2 className="mt-1 font-display text-2xl text-ink">
               {t?.projects?.title ?? 'Projetos'}
             </h2>
-            <p className="mt-3 max-w-[24ch] text-sm leading-relaxed text-ink/50">
-              {t?.projects?.subtitle ?? ''}
-            </p>
+            {t?.projects?.subtitle ? (
+              <p className="mt-3 max-w-[24ch] text-sm leading-relaxed text-ink/50">
+                {t.projects.subtitle}
+              </p>
+            ) : null}
           </div>
 
           <div>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 pb-4">
-              {activeCats.map((c) => (
-                <button
-                  key={c.key}
-                  onClick={() => setFilter(c.key)}
-                  className={`font-mono text-xs uppercase tracking-widest transition-colors ${
-                    filter === c.key
-                      ? 'text-ink underline decoration-blue decoration-2 underline-offset-[6px]'
-                      : 'text-ink/40 hover:text-ink'
-                  }`}
-                >
-                  {c.label}
-                </button>
-              ))}
-            </div>
+            {activeCats.length > 2 && (
+              <div className="flex flex-wrap gap-x-5 gap-y-2 pb-4">
+                {activeCats.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => setFilter(c.key)}
+                    className={`font-mono text-xs uppercase tracking-widest transition-colors ${
+                      filter === c.key
+                        ? 'text-ink underline decoration-blue decoration-2 underline-offset-[6px]'
+                        : 'text-ink/40 hover:text-ink'
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <ul className="border-t border-ink">
               {filtered.map((p, i) => (

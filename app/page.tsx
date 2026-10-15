@@ -11,10 +11,6 @@ const AboutSection = dynamic(() => import('@/components/about-section'), {
   loading: () => <div className="min-h-[60vh]" />,
 });
 
-const DisclaimerSection = dynamic(() => import('@/components/disclaimer-section'), {
-  loading: () => <div className="min-h-[50vh]" />,
-});
-
 const ProjectsSection = dynamic(() => import('@/components/projects-section'), {
   loading: () => <div className="min-h-[60vh]" />,
 });
@@ -33,7 +29,6 @@ export default function Home() {
       <Header />
       <HeroSection />
       <AboutSection />
-      <DisclaimerSection />
       <ProjectsSection />
       <ContactSection />
       <Footer />

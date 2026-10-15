@@ -30,7 +30,9 @@ export default function HeroSection() {
 
   const statement =
     t?.hero?.statement ??
-    (language === 'pt-BR' ? 'Transformo dados em decisões.' : 'I turn data into decisions.');
+    (language === 'pt-BR'
+      ? 'Limpo bases, monto pipelines e automatizo o que se repete.'
+      : 'I clean data, build pipelines and automate what repeats.');
   const lead = t?.hero?.lead ?? t?.hero?.subtitle ?? '';
   const stack = ['Python', 'SQL', 'Pandas', 'Streamlit', 'ETL'];
 
