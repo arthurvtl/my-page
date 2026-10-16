@@ -30,9 +30,9 @@ export const translations = {
       greeting: 'Olá, eu sou',
       name: 'Arthur Vital', // <- EDITE SEU NOME AQUI
       title: 'Analista de Dados', // <- EDITE SEU TÍTULO
-      statement: 'Limpo bases, monto pipelines e automatizo o que se repete.',
+      statement: 'Olá, seja bem-vindo 👋',
       lead: 'Uso Python, SQL e Pandas para organizar dados, escrever ETL e montar dashboards.',
-      subtitle: 'Limpo bases, monto pipelines e automatizo o que se repete.',
+      subtitle: 'Olá, seja bem-vindo 👋',
       cta: 'Ver projetos',
       contact: 'Entrar em contato',
     },
@@ -95,9 +95,9 @@ export const translations = {
       greeting: "Hi, I'm",
       name: 'Arthur Vital', // <- EDIT YOUR NAME HERE
       title: 'Data Analyst', // <- EDIT YOUR TITLE
-      statement: 'I clean data, build pipelines and automate what repeats.',
+      statement: 'Hello, welcome 👋',
       lead: 'I use Python, SQL and Pandas to organize data, write ETL jobs and build dashboards.',
-      subtitle: 'I clean data, build pipelines and automate what repeats.',
+      subtitle: 'Hello, welcome 👋',
       cta: 'View projects',
       contact: 'Get in touch',
     },
